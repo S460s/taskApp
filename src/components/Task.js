@@ -4,6 +4,7 @@ class Task extends React.Component {
 		super(props);
 		this.state = {
 			editOn: false,
+			newTaskName: '',
 		};
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -22,8 +23,9 @@ class Task extends React.Component {
 	}
 
 	handleSave(e) {
+		e.preventDefault();
 		this.handleEdit();
-		this.props.editTask();
+		this.props.editTask(this.props.taskObj.key, this.state.newTaskName);
 	}
 
 	render() {
@@ -32,13 +34,21 @@ class Task extends React.Component {
 		if (this.state.editOn) {
 			return (
 				<div className='taskCard'>
-					<input
-						type='text'
-						placeholder='New task name'
-						value={this.props.taskObj.task}
-					/>
-					<button onClick={this.handleEdit}>Cancel</button>
-					<button onClick={this.handleClick}>Submit</button>
+					<form action=''>
+						<input
+							type='text'
+							placeholder='Enter new task name'
+							value={this.state.newTaskName}
+							onChange={this.handleChange}
+							name='newTaskName'
+						/>
+						<button type='button' onClick={this.handleEdit}>
+							Cancel
+						</button>
+						<button type='submit' onClick={this.handleSave}>
+							Submit
+						</button>
+					</form>
 				</div>
 			);
 		}
